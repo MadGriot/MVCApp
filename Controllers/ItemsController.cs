@@ -18,15 +18,58 @@ namespace MVCApp.Controllers
             return View(item);
         }
 
-        public IActionResult Edit(int id)
-        {
-            return Content("id= " + id);
-        }
-
         public async Task<IActionResult> Index()
         {
             List<Item> item = await context.Items.ToListAsync();
             return View(item);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("Id, Name, Price")] Item item)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Items.Add(item);
+                await context.SaveChangesAsync();
+                return RedirectToAction("index");
+            }
+            return View(item);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Item item = await context.Items.FirstOrDefaultAsync(x => x.Id == id);
+            return View(item);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Price")] Item item)
+        {
+            if (ModelState.IsValid)
+            {
+                context.Update(item);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(item);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            Item item = await context.Items.FirstOrDefaultAsync(x => x.Id == id);
+            return View(item);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Item item = await context.Items.FindAsync(id);
+            if (item != null)
+            {
+                context.Items.Remove(item);
+                await context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
         }
     }
 }
