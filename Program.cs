@@ -1,8 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using MVCApp.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDbContext<MVCAppDbContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("localDb")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

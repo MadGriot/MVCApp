@@ -1,0 +1,25 @@
+﻿@model MVCApp.Models.Item
+@{
+    List<string> items = ["Item1", "Item2", "Item3"];
+    string message = "hello World";
+    bool isLoggedIn = true;
+}
+<p>This is the name of the item @Model.Name</p>
+<br />
+<p>@message</p>
+<br />
+<ul>
+    @foreach(string item in items)
+    {
+        <li>@item</li>
+    }
+</ul>
+<br />
+@if (isLoggedIn)
+{
+    <p>Welcome back!</p>
+}
+else
+{
+    <p>Please log in.</p>
+}
