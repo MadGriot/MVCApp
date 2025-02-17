@@ -20,7 +20,7 @@ namespace MVCApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<Item> item = await context.Items.ToListAsync();
+            List<Item> item = await context.Items.Include(s => s.SerialNumber).ToListAsync();
             return View(item);
         }
         public IActionResult Create()
