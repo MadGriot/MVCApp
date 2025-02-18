@@ -8,9 +8,11 @@
 <table class="table">
     <thead>
         <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Serial Number</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Serial Number</th>
+            <th>Category</th>
+            <th>Clients</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +22,13 @@
                 <td>@item.Name</td>
                 <td>@item.Price.ToString("N2")</td>
                 <td>@item.SerialNumber?.Name</td>
+                <td>@item.Category?.Name</td>
+                <td>
+                    @foreach(ItemClient client in item.ItemClients)
+                    {
+                        @client.Client.Name
+                    }
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
